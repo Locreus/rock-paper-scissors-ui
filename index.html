@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Rock Paper Scissors</title>
+	</head>
+	<style>
+		p{
+			font-size: 30px;
+		}
+		button{
+			width: 160px;
+			height: 90px;
+			border: 3px solid #326;
+			background-color: #ddd;
+			font-size: 32px;
+			margin: 0px 15px;
+			cursor: pointer;
+		}
+	</style>
+	<body>
+		<div id="main-div">
+			<div id="button-container"></div>
+			<div id="record">
+				<p id="wins">Wins: 0</p>
+				<p id="losses">Losses: 0</p>
+				<p id="draws">Draws: 0</p>
+			</div>
+		</div>
+	</body>
+	<script>
+		var wins = 0;
+		var losses = 0;
+		var draws = 0;
+		const choices = [ "rock", "paper", "scissors" ];
+		function updateDraws(){
+			++draws;
+			const d = document.querySelector("#draws");
+			d.textContent = `Draws: ${draws}`;
+		}
+		function updateWins(){
+			++wins;
+			const w = document.querySelector("#wins");
+			w.textContent = `Wins: ${wins}`;
+		}
+		function updateLosses(){
+			++losses;
+			const l = document.querySelector("#losses");
+			l.textContent = `Losses: ${losses}`;
+		}
+		function result(playerChoice){
+			let cpu = choices[Math.floor(Math.random() * 3)];
+			if (playerChoice === cpu){ updateDraws(); return;}
+			if (playerChoice === "rock"){
+			  if (cpu === "scissors"){ updateWins(); }
+			  else { updateLosses(); }
+			}
+			else if (playerChoice === "paper"){
+			  if (cpu === "rock"){ updateWins(); }
+			  else { updateLosses(); }
+			}
+			else {
+			  if (cpu === "paper"){ updateWins(); }
+			  else { updateLosses(); }
+			}
+		}
+		
+		const container = document.querySelector("#button-container");
+		for (var i = 0 ; i < choices.length ; i++){
+			let newButton = document.createElement("button");
+			newButton.textContent = choices[i];
+			newButton.id = choices[i];
+			newButton.addEventListener("click", function(){ result(newButton.textContent); });
+			newButton.setAttribute("type", "button");
+			container.appendChild(newButton);
+		}
+	</script>
+</html>
